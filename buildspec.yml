@@ -1,4 +1,5 @@
 version: 0.2
+
 env:
   shell: bash
   variables:
@@ -9,8 +10,7 @@ phases:
   pre_build:
     commands:
       - echo "Login to ECR..."
-      - aws ecr get-login-password --region "$AWS_DEFAULT_REGION" \
-          | docker login --username AWS --password-stdin "${ECR_REPO_URI%/*}"
+      - aws ecr get-login-password --region "$AWS_DEFAULT_REGION" | docker login --username AWS --password-stdin "${ECR_REPO_URI%/*}"
       - IMAGE_TAG="${IMAGE_TAG_PREFIX:-build}-${CODEBUILD_BUILD_NUMBER}"
       - echo "Tag: $IMAGE_TAG"
 
